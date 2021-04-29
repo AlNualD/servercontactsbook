@@ -9,9 +9,18 @@ import ru.devegang.servercontactsbook.repositories.UsersRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ContactsService implements ContactsServiceInterface {
+
+
+    private boolean checkNumber(String number) {
+        Pattern pattern = Pattern.compile("^(8|(\\+?7))?\\d{10}$");
+        Matcher matcher = pattern.matcher(number);
+        return matcher.matches();
+    }
 
     @Autowired
     UsersRepository usersRepository;
@@ -21,7 +30,7 @@ public class ContactsService implements ContactsServiceInterface {
     @Override
     public Optional<Contact> createContact(long user_id, Contact contact) {
         Optional<User> opUser = usersRepository.findById(user_id);
-        if(opUser.isPresent()) {
+        if(opUser.isPresent() && checkNumber(contact.getNumber())) {
             contact.setUser(opUser.get());
             return Optional.of(contactsRepository.saveAndFlush(contact));
         }
@@ -31,7 +40,7 @@ public class ContactsService implements ContactsServiceInterface {
 
     @Override
     public boolean updateContact(Contact contact) {
-        if(contactsRepository.existsById(contact.getId())) {
+        if(contactsRepository.existsById(contact.getId()) && checkNumber(contact.getNumber())) {
             contactsRepository.saveAndFlush(contact);
             return true;
         }
@@ -68,11 +77,8 @@ public class ContactsService implements ContactsServiceInterface {
     public List<Contact> getUserContactByNumber(long user_id, String number) {
 
         Optional<User> opUser = usersRepository.findById(user_id);
-        if(opUser.isPresent()) {
-            return contactsRepository.findAllByUserAndAndNumberContaining(opUser.get(),number);
-        } else {
-            return null;
-        }
+
+        return opUser.isPresent()? contactsRepository.findAllByUserAndNumberContaining(opUser.get(),number) : null;
 
     }
 }

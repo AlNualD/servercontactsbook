@@ -9,6 +9,5 @@ import java.util.Optional;
 
 public interface ContactsRepository extends JpaRepository<Contact,Long> {
     Optional<Contact> findByNumber(String number);
-    List<Contact> findAllByUserAndAndNumberContaining(User user, String numberPart);
-    List<Contact> findAllBy
+    List<Contact> findAllByUserAndNumberContaining(User user, String numberPart);
 }
