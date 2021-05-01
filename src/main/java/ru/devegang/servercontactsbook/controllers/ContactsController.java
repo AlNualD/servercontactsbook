@@ -30,7 +30,7 @@ public class ContactsController {
     return contacts!= null && !contacts.isEmpty() ? new ResponseEntity<>(contacts, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @Operation(summary = "Получить номер по ID")
+    @Operation(summary = "Получить контакт по ID")
     @GetMapping("/contacts/{id}")
     public ResponseEntity<?> getContact(@PathVariable(name = "id")long id) {
         Optional<Contact> opContact = contactsService.getContact(id);

@@ -22,6 +22,10 @@ public class ContactsService implements ContactsServiceInterface {
         return matcher.matches();
     }
 
+    private boolean checkName(String name) {
+        return name!=null&&!name.isBlank();
+    }
+
     @Autowired
     UsersRepository usersRepository;
     @Autowired
@@ -30,7 +34,7 @@ public class ContactsService implements ContactsServiceInterface {
     @Override
     public Optional<Contact> createContact(long user_id, Contact contact) {
         Optional<User> opUser = usersRepository.findById(user_id);
-        if(opUser.isPresent() && checkNumber(contact.getNumber())) {
+        if(opUser.isPresent() && checkNumber(contact.getNumber()) && checkName(contact.getName())) {
             contact.setUser(opUser.get());
             return Optional.of(contactsRepository.saveAndFlush(contact));
         }
@@ -40,7 +44,7 @@ public class ContactsService implements ContactsServiceInterface {
 
     @Override
     public boolean updateContact(Contact contact) {
-        if(contactsRepository.existsById(contact.getId()) && checkNumber(contact.getNumber())) {
+        if(contactsRepository.existsById(contact.getId()) && checkNumber(contact.getNumber()) && checkName(contact.getName())) {
             contactsRepository.saveAndFlush(contact);
             return true;
         }

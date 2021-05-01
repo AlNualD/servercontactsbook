@@ -14,10 +14,13 @@ public class UsersService implements UsersServiceInterface {
     @Autowired
     UsersRepository usersRepository;
 
+    private boolean checkName(String name) {
+        return name!=null&&!name.isBlank();
+    }
 
     @Override
     public Optional<User> createUser(User user) {
-        if(usersRepository.existsUserByName(user.getName())) {
+        if(usersRepository.existsUserByName(user.getName()) || !checkName(user.getName())) {
             return Optional.empty();
         }
 
@@ -30,7 +33,7 @@ public class UsersService implements UsersServiceInterface {
     public boolean updateUser(User user) {
 
         Optional<User> opOldUser = usersRepository.findById(user.getId());
-        if(opOldUser.isPresent() && !usersRepository.existsUserByName(user.getName())) {
+        if(opOldUser.isPresent() && !usersRepository.existsUserByName(user.getName()) && checkName(user.getName())) {
             usersRepository.saveAndFlush(user);
             return true;
         }
