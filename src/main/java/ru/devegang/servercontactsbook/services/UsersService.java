@@ -20,7 +20,7 @@ public class UsersService implements UsersServiceInterface {
 
     @Override
     public Optional<User> createUser(User user) {
-        if(usersRepository.existsUserByName(user.getName()) || !checkName(user.getName())) {
+        if (!checkName(user.getName()) || usersRepository.existsUserByName(user.getName())) {
             return Optional.empty();
         }
 
@@ -33,7 +33,8 @@ public class UsersService implements UsersServiceInterface {
     public boolean updateUser(User user) {
 
         Optional<User> opOldUser = usersRepository.findById(user.getId());
-        if(opOldUser.isPresent() && !usersRepository.existsUserByName(user.getName()) && checkName(user.getName())) {
+
+        if (opOldUser.isPresent() && checkName(user.getName()) && (opOldUser.get().getName().equals(user.getName()) || !usersRepository.existsUserByName(user.getName()))) {
             usersRepository.saveAndFlush(user);
             return true;
         }
@@ -64,8 +65,6 @@ public class UsersService implements UsersServiceInterface {
     @Override
     public List<User> getAllByName(String name) {
 
-        List<User> users = usersRepository.findAllByNameStartingWith(name);
-
-        return users;
+        return usersRepository.findAllByNameStartingWith(name);
     }
 }
