@@ -7,7 +7,7 @@ plugins {
 
 
 group = 'ru.devegang'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '11'
 
 configurations {
@@ -19,6 +19,15 @@ configurations {
 repositories {
     mavenCentral()
 }
+
+bootJar {
+
+    enabled = true
+    manifest {
+        attributes 'Start-Class': 'ru.devegang.servercontactsbook.ServerContactsBookApplication'
+    }
+}
+
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
