@@ -1,7 +1,7 @@
 # Книга контактов
 ## Способы запуска программы 
 * 1 вариант  
-Посетить https://servercontactsbook.herokuapp.com/swagger-ui/index.html?configUrl=/  
+Посетить https://servercontactsbook.herokuapp.com/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
 Приложение развернуто, подключено к небольшой БД с данными 
 * 2 вариант  
 Запустить build/libs/servercontactsbook-1.0.0.jar который автоматически подключится к удаленной БД из варианта выше 

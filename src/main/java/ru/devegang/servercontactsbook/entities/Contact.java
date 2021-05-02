@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "contacts")
+@Schema(description = "Сущность контакта")
 public class Contact {
 
     @Id
@@ -22,10 +23,13 @@ public class Contact {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private long id;
 
+
     @Column(name = "name", nullable = false)
+    @Schema(description = "Имя контакта. Может повторяться")
     private String name;
 
     @Column(name = "number", nullable = false)
+    @Schema(description = "Телефонный номер контакта", example = "89101232323 или +79101232323 или 79101232323 или 9101232323")
     private String number;
 
 

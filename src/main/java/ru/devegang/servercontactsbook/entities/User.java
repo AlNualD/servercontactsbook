@@ -17,6 +17,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
+@Schema(description = "Сущность пользователя")
 public class User {
 
     @Id
@@ -26,6 +27,7 @@ public class User {
 
 
     @Column(name = "name", unique = true, nullable = false)
+    @Schema(description = "Имя пользователя, уникальное")
     private String name;
 
     @JsonIgnore

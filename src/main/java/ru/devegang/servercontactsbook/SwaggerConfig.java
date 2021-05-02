@@ -1,3 +1,4 @@
+package ru.devegang.servercontactsbook;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -12,12 +13,12 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI().info(
                 new Info().title("Contacts book")
-                            .version("v1")
-                            .contact(
-                                    new Contact()
+                        .version("1.0.0")
+                        .contact(
+                                new Contact()
                                         .email("nuald54321@gmail.com")
                                         .name("Alexander")
-                            )
+                        )
         );
     }
 
